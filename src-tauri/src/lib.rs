@@ -264,9 +264,9 @@ async fn install_model_complete(exe:String,name:String)->Result<String,String>{
   let install=Command::new(&env).args(["-m","pip","install","gdown"]).output().map_err(|e|e.to_string())?;
   if !install.status.success(){return Err(format!("Installing model downloader failed: {}",String::from_utf8_lossy(&install.stderr)))}
   let output=if model=="informative"{
-   Command::new(&env).args(["-m","gdown","--id","1MIdHzecxz-z0uY3ARL_R40DlKcuQxiDk","-O"]).arg(tmp.join("netG_A_latest.pth")).output()
+   Command::new(&env).args(["-m","gdown","https://drive.google.com/uc?id=1MIdHzecxz-z0uY3ARL_R40DlKcuQxiDk","-O"]).arg(tmp.join("netG_A_latest.pth")).output()
   }else{
-   Command::new(&env).args(["-m","gdown","--folder","--remaining-ok","https://drive.google.com/drive/folders/1Srf-WYUixK0wiUddc9y3pNKHHno5PN6R","-O"]).arg(&tmp).output()
+   Command::new(&env).args(["-m","gdown","--folder","https://drive.google.com/drive/folders/1Srf-WYUixK0wiUddc9y3pNKHHno5PN6R","-O"]).arg(&tmp).output()
   }.map_err(|e|e.to_string())?;
   if !output.status.success(){return Err(format!("Google Drive download failed: {}. Try again later or use Import weights.",String::from_utf8_lossy(&output.stderr)))}
   let src=if model=="informative"{tmp.join("netG_A_latest.pth")}else{

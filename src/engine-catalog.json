@@ -1,0 +1,1237 @@
+{
+  "commands": {
+    "doctor": {
+      "help": "usage: whiteboard doctor [-h]\n\noptions:\n  -h, --help  show this help message and exit\n",
+      "exitCode": 0
+    },
+    "list-hands": {
+      "help": "usage: whiteboard list-hands [-h]\n\noptions:\n  -h, --help  show this help message and exit\n",
+      "exitCode": 0
+    },
+    "list-styles": {
+      "help": "usage: whiteboard list-styles [-h] [--json]\n                              [--compatibility {native,adaptive,experimental}]\n\noptions:\n  -h, --help            show this help message and exit\n  --json                Write machine-readable JSON.\n  --compatibility {native,adaptive,experimental}\n                        Only show styles with this whiteboard-rendering\n                        compatibility level.\n",
+      "exitCode": 0
+    },
+    "recommend-styles": {
+      "help": "usage: whiteboard recommend-styles [-h] [--limit LIMIT] [--json] script\n\npositional arguments:\n  script\n\noptions:\n  -h, --help     show this help message and exit\n  --limit LIMIT\n  --json         Write machine-readable JSON.\n",
+      "exitCode": 0
+    },
+    "plan-script": {
+      "help": "usage: whiteboard plan-script [-h] -o OUTPUT [--scenes SCENES] [--real]\n                              [--style STYLE | --custom-style CUSTOM_STYLE |\n                              --custom-style-file CUSTOM_STYLE_FILE]\n                              [--theme THEME]\n                              script\n\npositional arguments:\n  script\n\noptions:\n  -h, --help            show this help message and exit\n  -o, --output OUTPUT\n  --scenes SCENES\n  --real                Use configured real LLM provider instead of\n                        deterministic mock planning.\n  --style STYLE         Built-in style id, order, localized name, alias, or\n                        auto.\n  --custom-style CUSTOM_STYLE\n                        Inline visual direction for a custom style recipe.\n  --custom-style-file CUSTOM_STYLE_FILE\n                        UTF-8 custom style description or constrained JSON\n                        recipe.\n  --theme THEME         Optional story-specific art direction layered onto the\n                        selected style.\n",
+      "exitCode": 0
+    },
+    "analyze-image": {
+      "help": "usage: whiteboard analyze-image [-h] -o OUTPUT [--width WIDTH]\n                                [--height HEIGHT]\n                                [--stroke-detail {balanced,rich,max}]\n                                image\n\npositional arguments:\n  image\n\noptions:\n  -h, --help            show this help message and exit\n  -o, --output OUTPUT\n  --width WIDTH\n  --height HEIGHT\n  --stroke-detail {balanced,rich,max}\n                        Raster stroke extraction detail. Rich keeps short\n                        semantic details; max keeps tiny logo/facial strokes.\n",
+      "exitCode": 0
+    },
+    "normalize-lineart": {
+      "help": "usage: whiteboard normalize-lineart [-h] -o OUTPUT [--threshold THRESHOLD]\n                                    [--clear-edge CLEAR_EDGE]\n                                    image\n\npositional arguments:\n  image\n\noptions:\n  -h, --help            show this help message and exit\n  -o, --output OUTPUT\n  --threshold THRESHOLD\n                        Dark-pixel threshold for pure B/W conversion. Lower\n                        values avoid thickening anti-aliased lines.\n  --clear-edge CLEAR_EDGE\n                        Clear this many pixels on each canvas edge to remove\n                        generated borders.\n",
+      "exitCode": 0
+    },
+    "extract-lineart": {
+      "help": "usage: whiteboard extract-lineart [-h] -o OUTPUT\n                                  [--provider {auto,informative,anime2sketch,anime,manga}]\n                                  [--svg-output SVG_OUTPUT]\n                                  image\n\npositional arguments:\n  image\n\noptions:\n  -h, --help            show this help message and exit\n  -o, --output OUTPUT\n  --provider {auto,informative,anime2sketch,anime,manga}\n  --svg-output SVG_OUTPUT\n                        Optional SVG output via vtracer when installed.\n",
+      "exitCode": 0
+    },
+    "render-photo": {
+      "help": "usage: whiteboard render-photo [-h] -o OUTPUT\n                               [--lineart-output LINEART_OUTPUT]\n                               [--svg-output SVG_OUTPUT]\n                               [--lineart-provider {auto,informative,anime2sketch,anime,manga}]\n                               [--duration DURATION] [--fps FPS]\n                               [--width WIDTH] [--height HEIGHT]\n                               [--tail-color TAIL_COLOR]\n                               [--source-fit {exact,blur-fill,contain,cover}]\n                               [--color-fill {contour-wipe,brush-scan,top-down-blocks,fade,left-to-right-gradient}]\n                               [--color-blocks COLOR_BLOCKS]\n                               [--line-reveal {stroke,detail-wipe}]\n                               [--base-line-opacity BASE_LINE_OPACITY]\n                               [--no-lineart-snap]\n                               [--lineart-snap-threshold LINEART_SNAP_THRESHOLD]\n                               [--line-thickness LINE_THICKNESS]\n                               [--stroke-detail {balanced,rich,max}]\n                               [--block-fill-style {crayon,clean,soft-wash,dry-brush}]\n                               [--color-fill-scope {block,scene}]\n                               [--draw-text DRAW_TEXT |\n                               --draw-text-file DRAW_TEXT_FILE]\n                               [--draw-text-role {annotation,caption}]\n                               [--draw-text-position {bottom,top,center}]\n                               [--draw-text-align {left,center,right}]\n                               [--draw-text-width DRAW_TEXT_WIDTH]\n                               [--draw-text-max-height DRAW_TEXT_MAX_HEIGHT]\n                               [--draw-text-line-spacing DRAW_TEXT_LINE_SPACING]\n                               [--draw-text-font-size DRAW_TEXT_FONT_SIZE]\n                               [--draw-text-font DRAW_TEXT_FONT]\n                               [--draw-text-reveal {stroke,line-wipe}]\n                               [--draw-text-order {before,after}]\n                               [--animation-preset {classic,block-speedpaint}]\n                               [--story-text STORY_TEXT]\n                               [--max-draw-blocks MAX_DRAW_BLOCKS]\n                               [--draw-blocks DRAW_BLOCKS]\n                               [--block-overlap BLOCK_OVERLAP]\n                               [--block-order {reading,source}]\n                               [--block-sequence BLOCK_SEQUENCE] [--hand HAND]\n                               [--hand-scale HAND_SCALE]\n                               image\n\npositional arguments:\n  image\n\noptions:\n  -h, --help            show this help message and exit\n  -o, --output OUTPUT\n  --lineart-output LINEART_OUTPUT\n                        Optional extracted line-art PNG path.\n  --svg-output SVG_OUTPUT\n                        Optional SVG output via vtracer when installed; SVG\n                        will be rendered if created.\n  --lineart-provider {auto,informative,anime2sketch,anime,manga}\n  --duration DURATION\n  --fps FPS\n  --width WIDTH         Output width. If omitted, render-photo uses the\n                        extracted line-art image width.\n  --height HEIGHT       Output height. If omitted, render-photo uses the\n                        extracted line-art image height.\n  --tail-color TAIL_COLOR\n  --source-fit {exact,blur-fill,contain,cover}\n  --color-fill {contour-wipe,brush-scan,top-down-blocks,fade,left-to-right-gradient}\n  --color-blocks COLOR_BLOCKS\n  --line-reveal {stroke,detail-wipe}\n                        Trace strokes or show a simple sketch immediately and\n                        add detail from left to right.\n  --base-line-opacity BASE_LINE_OPACITY\n                        Initial contour and black-hair opacity used by detail-\n                        wipe (0.0-1.0).\n  --no-lineart-snap\n  --lineart-snap-threshold LINEART_SNAP_THRESHOLD\n  --line-thickness LINE_THICKNESS\n                        Rendered stroke width. Use 0 to adapt to the source\n                        line art, or a positive value to override it.\n  --stroke-detail {balanced,rich,max}\n  --block-fill-style {crayon,clean,soft-wash,dry-brush}\n  --color-fill-scope {block,scene}\n                        Fill each natural object separately, or reveal one\n                        registered whole-scene color plate.\n  --draw-text DRAW_TEXT\n                        Text to reveal. Newlines are preserved; literal \\n is\n                        also accepted.\n  --draw-text-file DRAW_TEXT_FILE\n                        UTF-8 text file used for longer multiline captions.\n  --draw-text-role {annotation,caption}\n                        Treat text as a short late annotation (default) or an\n                        explicit full caption.\n  --draw-text-position {bottom,top,center}\n  --draw-text-align {left,center,right}\n  --draw-text-width DRAW_TEXT_WIDTH\n                        Maximum text width as a fraction of the canvas\n                        (0.1-1.0).\n  --draw-text-max-height DRAW_TEXT_MAX_HEIGHT\n                        Maximum text block height as a fraction of the canvas\n                        (0.1-1.0).\n  --draw-text-line-spacing DRAW_TEXT_LINE_SPACING\n                        Line spacing as a fraction of the selected font size.\n  --draw-text-font-size DRAW_TEXT_FONT_SIZE\n                        Optional fixed font size in pixels; otherwise text is\n                        fit automatically.\n  --draw-text-font DRAW_TEXT_FONT\n                        Optional TTF/TTC/OTF font path, useful for a\n                        handwritten Chinese font.\n  --draw-text-reveal {stroke,line-wipe}\n                        Trace glyph strokes or reveal each line from left to\n                        right.\n  --draw-text-order {before,after}\n                        Reveal text before or after the image strokes.\n  --animation-preset {classic,block-speedpaint}\n                        Classic whole-scene drawing or object-by-object\n                        outline/detail/crayon beats.\n  --story-text STORY_TEXT\n                        Legacy explicit full caption revealed from left to\n                        right by block-speedpaint.\n  --max-draw-blocks MAX_DRAW_BLOCKS\n                        Maximum automatically inferred object blocks.\n  --draw-blocks DRAW_BLOCKS\n                        Preferred maximum natural block count; connected\n                        objects are never split to reach it.\n  --block-overlap BLOCK_OVERLAP\n                        Overlap between adjacent block windows (0-0.65).\n  --block-order {reading,source}\n  --block-sequence BLOCK_SEQUENCE\n                        Explicit inferred block ids, such as 1,0.\n  --hand HAND\n  --hand-scale HAND_SCALE\n",
+      "exitCode": 0
+    },
+    "render-image": {
+      "help": "usage: whiteboard render-image [-h] -o OUTPUT [--duration DURATION]\n                               [--fps FPS] [--width WIDTH] [--height HEIGHT]\n                               [--size-from-image] [--tail-color TAIL_COLOR]\n                               [--mode {smooth,grid}]\n                               [--source-image SOURCE_IMAGE]\n                               [--source-fit {exact,blur-fill,contain,cover}]\n                               [--color-fill {contour-wipe,brush-scan,top-down-blocks,fade,left-to-right-gradient}]\n                               [--color-blocks COLOR_BLOCKS]\n                               [--line-reveal {stroke,detail-wipe}]\n                               [--base-line-opacity BASE_LINE_OPACITY]\n                               [--no-lineart-snap]\n                               [--lineart-snap-threshold LINEART_SNAP_THRESHOLD]\n                               [--line-thickness LINE_THICKNESS]\n                               [--stroke-detail {balanced,rich,max}]\n                               [--block-fill-style {crayon,clean,soft-wash,dry-brush}]\n                               [--color-fill-scope {block,scene}]\n                               [--draw-text DRAW_TEXT |\n                               --draw-text-file DRAW_TEXT_FILE]\n                               [--draw-text-role {annotation,caption}]\n                               [--draw-text-position {bottom,top,center}]\n                               [--draw-text-align {left,center,right}]\n                               [--draw-text-width DRAW_TEXT_WIDTH]\n                               [--draw-text-max-height DRAW_TEXT_MAX_HEIGHT]\n                               [--draw-text-line-spacing DRAW_TEXT_LINE_SPACING]\n                               [--draw-text-font-size DRAW_TEXT_FONT_SIZE]\n                               [--draw-text-font DRAW_TEXT_FONT]\n                               [--draw-text-reveal {stroke,line-wipe}]\n                               [--draw-text-order {before,after}]\n                               [--animation-preset {classic,block-speedpaint}]\n                               [--story-text STORY_TEXT]\n                               [--max-draw-blocks MAX_DRAW_BLOCKS]\n                               [--draw-blocks DRAW_BLOCKS]\n                               [--block-overlap BLOCK_OVERLAP]\n                               [--block-order {reading,source}]\n                               [--block-sequence BLOCK_SEQUENCE] [--hand HAND]\n                               [--hand-scale HAND_SCALE]\n                               image\n\npositional arguments:\n  image\n\noptions:\n  -h, --help            show this help message and exit\n  -o, --output OUTPUT\n  --duration DURATION\n  --fps FPS\n  --width WIDTH\n  --height HEIGHT\n  --size-from-image     Use the raster line-art image size as the render\n                        canvas, adjusted to even H.264 dimensions.\n  --tail-color TAIL_COLOR\n  --mode {smooth,grid}  Compatibility option. Smooth is the maintained\n                        renderer.\n  --source-image SOURCE_IMAGE\n                        Optional original/color image used for the final color\n                        fade while drawing from the line-art image.\n  --source-fit {exact,blur-fill,contain,cover}\n                        How to fit --source-image for the final color fill.\n  --color-fill {contour-wipe,brush-scan,top-down-blocks,fade,left-to-right-gradient}\n                        Final color fill style.\n  --color-blocks COLOR_BLOCKS\n                        Number of horizontal blocks used by top-down color\n                        fill.\n  --line-reveal {stroke,detail-wipe}\n                        Trace strokes or show a simple sketch immediately and\n                        add detail from left to right.\n  --base-line-opacity BASE_LINE_OPACITY\n                        Initial contour and black-hair opacity used by detail-\n                        wipe (0.0-1.0).\n  --no-lineart-snap     Disable snapping to the original complete line-art\n                        image before color fill.\n  --lineart-snap-threshold LINEART_SNAP_THRESHOLD\n                        Threshold used by line-art snap. Lower avoids\n                        thickening/noise from gray pixels.\n  --line-thickness LINE_THICKNESS\n                        Rendered stroke width. Use 0 to adapt to the source\n                        line art, or a positive value to override it.\n  --stroke-detail {balanced,rich,max}\n                        Raster stroke extraction detail. Rich keeps short\n                        semantic details; max keeps tiny logo/facial strokes.\n  --block-fill-style {crayon,clean,soft-wash,dry-brush}\n  --color-fill-scope {block,scene}\n                        Fill each natural object separately, or reveal one\n                        registered whole-scene color plate.\n  --draw-text DRAW_TEXT\n                        Text to reveal. Newlines are preserved; literal \\n is\n                        also accepted.\n  --draw-text-file DRAW_TEXT_FILE\n                        UTF-8 text file used for longer multiline captions.\n  --draw-text-role {annotation,caption}\n                        Treat text as a short late annotation (default) or an\n                        explicit full caption.\n  --draw-text-position {bottom,top,center}\n  --draw-text-align {left,center,right}\n  --draw-text-width DRAW_TEXT_WIDTH\n                        Maximum text width as a fraction of the canvas\n                        (0.1-1.0).\n  --draw-text-max-height DRAW_TEXT_MAX_HEIGHT\n                        Maximum text block height as a fraction of the canvas\n                        (0.1-1.0).\n  --draw-text-line-spacing DRAW_TEXT_LINE_SPACING\n                        Line spacing as a fraction of the selected font size.\n  --draw-text-font-size DRAW_TEXT_FONT_SIZE\n                        Optional fixed font size in pixels; otherwise text is\n                        fit automatically.\n  --draw-text-font DRAW_TEXT_FONT\n                        Optional TTF/TTC/OTF font path, useful for a\n                        handwritten Chinese font.\n  --draw-text-reveal {stroke,line-wipe}\n                        Trace glyph strokes or reveal each line from left to\n                        right.\n  --draw-text-order {before,after}\n                        Reveal text before or after the image strokes.\n  --animation-preset {classic,block-speedpaint}\n                        Classic whole-scene drawing or object-by-object\n                        outline/detail/crayon beats.\n  --story-text STORY_TEXT\n                        Legacy explicit full caption revealed from left to\n                        right by block-speedpaint.\n  --max-draw-blocks MAX_DRAW_BLOCKS\n                        Maximum automatically inferred object blocks.\n  --draw-blocks DRAW_BLOCKS\n                        Preferred maximum natural block count; connected\n                        objects are never split to reach it.\n  --block-overlap BLOCK_OVERLAP\n                        Overlap between adjacent block windows (0-0.65).\n  --block-order {reading,source}\n  --block-sequence BLOCK_SEQUENCE\n                        Explicit inferred block ids, such as 1,0.\n  --hand HAND           Hand cursor: asian (default), black, children, white,\n                        procedural, none, or a custom PNG/WebP path.\n  --hand-scale HAND_SCALE\n",
+      "exitCode": 0
+    },
+    "compose": {
+      "help": "usage: whiteboard compose [-h] -o OUTPUT videos [videos ...]\n\npositional arguments:\n  videos\n\noptions:\n  -h, --help           show this help message and exit\n  -o, --output OUTPUT\n",
+      "exitCode": 0
+    },
+    "run": {
+      "help": "usage: whiteboard run [-h] -o OUTPUT [--scenes SCENES] [--fps FPS]\n                      [--width WIDTH] [--height HEIGHT]\n                      [--tail-color TAIL_COLOR]\n                      [--tts-provider {none,edge,doubao}] [--voice VOICE]\n                      [--image-model IMAGE_MODEL]\n                      [--image-quality {low,medium,high,auto}]\n                      [--lineart-provider {auto,informative,anime2sketch,anime,manga}]\n                      [--scene-assets {auto,color-to-lineart,direct-lineart}]\n                      [--storyboard-dir STORYBOARD_DIR]\n                      [--scene-plan SCENE_PLAN]\n                      [--animation-preset {classic,block-speedpaint}]\n                      [--style STYLE | --custom-style CUSTOM_STYLE |\n                      --custom-style-file CUSTOM_STYLE_FILE] [--theme THEME]\n                      [--max-draw-blocks MAX_DRAW_BLOCKS]\n                      [--draw-blocks DRAW_BLOCKS]\n                      [--block-overlap BLOCK_OVERLAP]\n                      [--block-order {reading,source}]\n                      [--block-sequence BLOCK_SEQUENCE]\n                      [--block-fill-style {crayon,clean,soft-wash,dry-brush}]\n                      [--color-fill-scope {block,scene}]\n                      [--stroke-detail {balanced,rich,max}]\n                      [--line-thickness LINE_THICKNESS]\n                      [--line-art-snap | --no-line-art-snap]\n                      [--line-art-snap-threshold LINE_ART_SNAP_THRESHOLD]\n                      [--captions | --no-captions | --burn-subtitles]\n                      [--subtitle-font SUBTITLE_FONT]\n                      [--subtitle-font-size SUBTITLE_FONT_SIZE]\n                      [--subtitle-margin-v SUBTITLE_MARGIN_V]\n                      [--subtitle-outline SUBTITLE_OUTLINE] [--resume]\n                      [--mock] [--hand HAND] [--hand-scale HAND_SCALE]\n                      script\n\npositional arguments:\n  script\n\noptions:\n  -h, --help            show this help message and exit\n  -o, --output OUTPUT\n  --scenes SCENES       Target count for automatic planning; ignored when\n                        --scene-plan is provided.\n  --fps FPS\n  --width WIDTH\n  --height HEIGHT\n  --tail-color TAIL_COLOR\n  --tts-provider {none,edge,doubao}\n                        Narration provider. Use none to render a completely\n                        silent video.\n  --voice VOICE         Provider voice ID. Defaults to the selected provider's\n                        recommended voice.\n  --image-model IMAGE_MODEL\n                        OpenAI storyboard model; defaults to gpt-image-2.\n  --image-quality {low,medium,high,auto}\n  --lineart-provider {auto,informative,anime2sketch,anime,manga}\n  --scene-assets {auto,color-to-lineart,direct-lineart}\n                        Generate color storyboards then extract local line\n                        art; direct-lineart is for Mock previews only.\n  --storyboard-dir STORYBOARD_DIR\n                        Use precomputed scene_01.png, scene_02.png... color\n                        storyboards (for example from Codex image generation).\n  --scene-plan SCENE_PLAN\n                        Use an explicit JSON scene list instead of remote\n                        scene planning. With --storyboard-dir, only the\n                        selected TTS provider is initialized.\n  --animation-preset {classic,block-speedpaint}\n  --style STYLE         Built-in style id, order, localized name, alias, or\n                        auto.\n  --custom-style CUSTOM_STYLE\n                        Inline visual direction for a custom style recipe.\n  --custom-style-file CUSTOM_STYLE_FILE\n                        UTF-8 custom style description or constrained JSON\n                        recipe.\n  --theme THEME         Optional story-specific art direction layered onto the\n                        selected style.\n  --max-draw-blocks MAX_DRAW_BLOCKS\n                        Override the style's maximum inferred scene blocks.\n  --draw-blocks DRAW_BLOCKS\n                        Override the style's preferred natural block count.\n                        Use 0 for automatic grouping.\n  --block-overlap BLOCK_OVERLAP\n                        Override the style's block timing overlap (0-0.65).\n  --block-order {reading,source}\n  --block-sequence BLOCK_SEQUENCE\n                        Explicit inferred block ids, such as 1,0.\n  --block-fill-style {crayon,clean,soft-wash,dry-brush}\n                        Override the selected style's block color texture.\n  --color-fill-scope {block,scene}\n                        Override block-local versus whole-scene registered\n                        color reveal.\n  --stroke-detail {balanced,rich,max}\n  --line-thickness LINE_THICKNESS\n  --line-art-snap, --no-line-art-snap\n                        Override whether the style snaps to the complete\n                        source line art.\n  --line-art-snap-threshold LINE_ART_SNAP_THRESHOLD\n  --captions            Deprecated no-op; use --burn-subtitles to burn the\n                        generated sidecar SRT.\n  --no-captions         Deprecated no-op; subtitle burn-in is disabled by\n                        default.\n  --burn-subtitles      Burn the generated narration SRT into the final MP4\n                        while keeping the sidecar file.\n  --subtitle-font SUBTITLE_FONT\n                        Font family used for burned subtitles; libass selects\n                        a glyph-compatible fallback.\n  --subtitle-font-size SUBTITLE_FONT_SIZE\n                        Burned subtitle size in ASS scale units (16 is\n                        suitable for 16:9 video).\n  --subtitle-margin-v SUBTITLE_MARGIN_V\n                        Bottom margin for burned subtitles in ASS scale units.\n  --subtitle-outline SUBTITLE_OUTLINE\n                        Black outline width for burned subtitles in ASS scale\n                        units.\n  --resume\n  --mock\n  --hand HAND           Hand cursor: asian (default), black, children, white,\n                        procedural, none, or a custom PNG/WebP path.\n  --hand-scale HAND_SCALE\n",
+      "exitCode": 0
+    }
+  },
+  "styles": [
+    {
+      "schema_version": 1,
+      "order": 1,
+      "id": "warm-crayon-storybook",
+      "name_zh": "暖色蜡笔故事书（默认）",
+      "name_en": "Warm crayon storybook",
+      "family": "蜡笔绘本",
+      "compatibility": "native",
+      "best_for": [
+        "寓言",
+        "儿童故事",
+        "生活故事",
+        "知识启蒙"
+      ],
+      "aliases": [
+        "default",
+        "storybook-crayon",
+        "warm-crayon",
+        "暖色蜡笔"
+      ],
+      "summary": "清晰深色轮廓、温暖蜡笔平涂和充足留白，最适合故事分镜逐层绘制。",
+      "planner_guidance": "Favor expressive characters, meaningful props, simple silhouettes, and natural object separation.",
+      "aesthetic": "Warm hand-drawn storybook illustration with clean dark crayon-and-pencil outlines, flat handmade color regions, and subtle wax texture.",
+      "paper": "Clean warm off-white drawing paper with no photographed tabletop or border.",
+      "palette": "Muted brick red, dusty blue, ochre, sage, tan, charcoal, and warm cream; visible but restrained wax strokes.",
+      "avoid": "glossy digital painting, smooth vector fills, anime polish, realistic lighting, dense scenery, gradients",
+      "render": {
+        "block_fill_style": "crayon",
+        "color_fill_scope": "block",
+        "stroke_detail": "rich",
+        "line_thickness": 0,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 6,
+        "draw_blocks": 4,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "whiteboard-video-engine curated media recipe"
+    },
+    {
+      "schema_version": 1,
+      "order": 2,
+      "id": "colored-pencil-diary",
+      "name_zh": "彩铅日记漫画",
+      "name_en": "Colored-pencil diary comic",
+      "family": "彩铅叙事",
+      "compatibility": "native",
+      "best_for": [
+        "家庭",
+        "纪实",
+        "情感",
+        "日常"
+      ],
+      "aliases": [
+        "diary",
+        "colored-pencil",
+        "彩铅日记"
+      ],
+      "summary": "笨拙毡尖轮廓配低饱和彩铅短笔触，像亲手记录的生活日记。",
+      "planner_guidance": "Stage the scene like one candid diary memory with compact figures and only essential props.",
+      "aesthetic": "Naive black felt-tip contours, oversized rounded heads, compact bodies, simple expressive faces, and visibly layered colored-pencil strokes with white gaps.",
+      "paper": "Bright clean white page with abundant untouched space and almost no paper grain.",
+      "palette": "Dusty blue, brick red, charcoal, beige, tan, muted yellow, and light gray in low-saturation pencil layers.",
+      "avoid": "anime, vector cleanliness, smooth fills, watercolor wash, gradients, realistic lighting, detailed rooms",
+      "render": {
+        "block_fill_style": "dry-brush",
+        "color_fill_scope": "block",
+        "stroke_detail": "rich",
+        "line_thickness": 0,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 6,
+        "draw_blocks": 4,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "adapted from story-to-handdrawn-video and its MIT-attributed style library"
+    },
+    {
+      "schema_version": 1,
+      "order": 3,
+      "id": "clean-whiteboard",
+      "name_zh": "经典清爽白板",
+      "name_en": "Clean whiteboard",
+      "family": "白板讲解",
+      "compatibility": "native",
+      "best_for": [
+        "教程",
+        "商业解释",
+        "流程",
+        "时间线"
+      ],
+      "aliases": [
+        "whiteboard",
+        "classic-whiteboard",
+        "whiteboard-explainer",
+        "经典白板"
+      ],
+      "summary": "黑色圆头白板笔和极少彩色重点，结构最清楚、抽线最稳定。",
+      "planner_guidance": "Prioritize cause-and-effect, readable gestures, simple arrows, and diagram-like spacing.",
+      "aesthetic": "Freshly hand-drawn whiteboard illustration using medium black round-tip marker contours, simple people and props, and only essential arrows or circles.",
+      "paper": "Clean matte whiteboard-white background without glare, room photography, borders, or smudged eraser bands.",
+      "palette": "Black marker with at most one blue and one red emphasis; most regions stay white.",
+      "avoid": "filled color masses, shadows, complex scenery, corporate icon libraries, dense annotations, pseudo-text",
+      "render": {
+        "block_fill_style": "clean",
+        "color_fill_scope": "block",
+        "stroke_detail": "balanced",
+        "line_thickness": 0,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 6,
+        "draw_blocks": 4,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "whiteboard-video-engine curated media recipe"
+    },
+    {
+      "schema_version": 1,
+      "order": 4,
+      "id": "minimal-line-explainer",
+      "name_zh": "极简黑白线条讲解",
+      "name_en": "Minimal line explainer",
+      "family": "白板讲解",
+      "compatibility": "native",
+      "best_for": [
+        "观点",
+        "步骤",
+        "科普",
+        "概念"
+      ],
+      "aliases": [
+        "minimal-line",
+        "stickman",
+        "火柴人",
+        "极简线条"
+      ],
+      "summary": "火柴人与极少道具构成的纯黑白解释图，信息读取速度最快。",
+      "planner_guidance": "Reduce every beat to one unmistakable gesture and one identity prop.",
+      "aesthetic": "Minimal black-ink explainer drawing with circle-headed stick figures, dot-line faces, thin slightly wobbly contours, and flat two-dimensional geometry.",
+      "paper": "Plain ivory-white paper with very large negative space.",
+      "palette": "Pure black line on ivory paper; no gray and no colored fill.",
+      "avoid": "solid black silhouettes, hatching, shading, volume, thick outlines, realism, decoration",
+      "render": {
+        "block_fill_style": "clean",
+        "color_fill_scope": "block",
+        "stroke_detail": "balanced",
+        "line_thickness": 1,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 5,
+        "draw_blocks": 4,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "adapted from story-to-handdrawn-video and its MIT-attributed style library"
+    },
+    {
+      "schema_version": 1,
+      "order": 5,
+      "id": "marker-whiteboard",
+      "name_zh": "粗马克笔白板",
+      "name_en": "Bold marker whiteboard",
+      "family": "白板讲解",
+      "compatibility": "native",
+      "best_for": [
+        "短视频",
+        "营销解释",
+        "清单",
+        "强观点"
+      ],
+      "aliases": [
+        "bold-whiteboard",
+        "marker-board",
+        "马克笔白板"
+      ],
+      "summary": "粗细略变的白板笔、强动作剪影和局部荧光标记，适合快速短视频。",
+      "planner_guidance": "Use bold readable poses and no more than three large visual ideas.",
+      "aesthetic": "Confident hand-drawn marker contours with rounded starts and stops, mild pressure variation, simple blocky props, and sparse hand-drawn emphasis marks.",
+      "paper": "Neutral bright white board surface with no room context.",
+      "palette": "Charcoal black plus one vivid cyan or coral highlighter accent.",
+      "avoid": "tiny details, thin technical lines, airbrushed shading, stock icons, dense decoration, fake writing",
+      "render": {
+        "block_fill_style": "clean",
+        "color_fill_scope": "block",
+        "stroke_detail": "balanced",
+        "line_thickness": 2,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 5,
+        "draw_blocks": 3,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "whiteboard-video-engine curated media recipe"
+    },
+    {
+      "schema_version": 1,
+      "order": 6,
+      "id": "rough-diagram",
+      "name_zh": "手绘草图图解",
+      "name_en": "Rough hand-drawn diagram",
+      "family": "白板图解",
+      "compatibility": "native",
+      "best_for": [
+        "架构",
+        "产品",
+        "流程",
+        "脑图"
+      ],
+      "aliases": [
+        "rough",
+        "sketch-diagram",
+        "手绘图解"
+      ],
+      "summary": "双描边轻微错位的草图形状、弯箭头和开放式布局，接近流行手绘画布语言。",
+      "planner_guidance": "Organize concepts as a few spatial objects connected only by necessary arrows.",
+      "aesthetic": "Friendly rough-diagram language: slightly bowed rectangles and circles, one or two imperfect contour passes, loose arrows, and simple hand-sketched people.",
+      "paper": "Warm near-white canvas with no grid and no application chrome.",
+      "palette": "Charcoal outlines, pale blue fills, one coral accent, and optional muted yellow highlights.",
+      "avoid": "perfect vector geometry, UI screenshots, typed labels, excessive connectors, drop shadows, photorealism",
+      "render": {
+        "block_fill_style": "clean",
+        "color_fill_scope": "block",
+        "stroke_detail": "rich",
+        "line_thickness": 1,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 7,
+        "draw_blocks": 5,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "media-language study informed by MIT-licensed Excalidraw and Rough.js; no code or assets embedded"
+    },
+    {
+      "schema_version": 1,
+      "order": 7,
+      "id": "pressure-ink-notes",
+      "name_zh": "压感墨线笔记",
+      "name_en": "Pressure-sensitive ink notes",
+      "family": "白板图解",
+      "compatibility": "native",
+      "best_for": [
+        "笔记",
+        "流程",
+        "人物解释",
+        "观点"
+      ],
+      "aliases": [
+        "freehand-notes",
+        "pressure-line",
+        "压感线条"
+      ],
+      "summary": "随速度与转向变化的压感线条，兼顾手写亲和力和结构清晰度。",
+      "planner_guidance": "Use economical freehand contours whose weight reinforces hierarchy and motion.",
+      "aesthetic": "Smooth but unmistakably hand-drawn ink contours with natural pressure taper, rounded caps, slightly thicker key silhouettes, and lighter internal detail lines.",
+      "paper": "Clean soft-white paper with almost invisible fiber.",
+      "palette": "Near-black ink, warm gray secondary lines, and one restrained cobalt accent.",
+      "avoid": "uniform vector strokes, calligraphy flourishes, heavy shading, dense backgrounds, typed text, glossy color",
+      "render": {
+        "block_fill_style": "clean",
+        "color_fill_scope": "block",
+        "stroke_detail": "rich",
+        "line_thickness": 0,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 6,
+        "draw_blocks": 4,
+        "block_overlap": 0.2,
+        "block_order": "reading"
+      },
+      "provenance": "media-language study informed by MIT-licensed perfect-freehand; no code or assets embedded"
+    },
+    {
+      "schema_version": 1,
+      "order": 8,
+      "id": "semantic-ink",
+      "name_zh": "语义钢笔线稿",
+      "name_en": "Semantic ink drawing",
+      "family": "线稿叙事",
+      "compatibility": "native",
+      "best_for": [
+        "人物故事",
+        "知识叙事",
+        "纪实",
+        "复杂道具"
+      ],
+      "aliases": [
+        "ink-line",
+        "informative-ink",
+        "钢笔线稿"
+      ],
+      "summary": "主轮廓深、内部细节浅的钢笔线稿，人物与道具信息保真度高。",
+      "planner_guidance": "Preserve identity, pose, and object semantics while simplifying surface texture.",
+      "aesthetic": "Expressive pen drawing with strong complete outer contours, lighter gray internal construction and detail lines, restrained cross-lines, and readable silhouettes.",
+      "paper": "Warm white sketch paper with very subtle fiber and broad empty margins.",
+      "palette": "Black, charcoal, warm gray, and one muted rust or blue accent.",
+      "avoid": "photo-edge noise, uniform binary contour, full-page hatching, glossy paint, clutter, tiny texture",
+      "render": {
+        "block_fill_style": "clean",
+        "color_fill_scope": "block",
+        "stroke_detail": "max",
+        "line_thickness": 0,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 238,
+        "max_draw_blocks": 6,
+        "draw_blocks": 4,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "whiteboard-video-engine curated media recipe"
+    },
+    {
+      "schema_version": 1,
+      "order": 9,
+      "id": "anime-graphite",
+      "name_zh": "动漫石墨线稿",
+      "name_en": "Anime graphite sketch",
+      "family": "线稿叙事",
+      "compatibility": "native",
+      "best_for": [
+        "角色故事",
+        "青春",
+        "二次元人物",
+        "动作"
+      ],
+      "aliases": [
+        "anime-pencil",
+        "graphite-anime",
+        "动漫铅笔"
+      ],
+      "summary": "保留灰阶笔压的二维人物石墨线稿，适合插画型角色分镜。",
+      "planner_guidance": "Keep recurring character clothing, hair silhouette, and facial proportions exact across scenes. Stage every shot as one continuous cinematic frame with a pale simplified environment behind darker foreground subjects.",
+      "aesthetic": "Clean animation-key graphite sketch with varied gray pencil pressure, confident outer contours, delicate facial lines, sparse construction marks, and no inked comic finish.",
+      "paper": "Cool-white animation paper with no desk, holes, frame, or registration marks.",
+      "palette": "Graphite gray with low-saturation local color appearing only in the final colored layer.",
+      "avoid": "dense manga screentone, black silhouettes, photoreal pencil portrait, messy background, glossy anime rendering, floating scenery cards, hard-edged background rectangles, equal-contrast dense scenery",
+      "render": {
+        "block_fill_style": "soft-wash",
+        "color_fill_scope": "scene",
+        "stroke_detail": "max",
+        "line_thickness": 0,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 240,
+        "max_draw_blocks": 6,
+        "draw_blocks": 4,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "whiteboard-video-engine curated media recipe"
+    },
+    {
+      "schema_version": 1,
+      "order": 10,
+      "id": "kid-crayon",
+      "name_zh": "儿童蜡笔坏画",
+      "name_en": "Childlike crayon drawing",
+      "family": "儿童涂画",
+      "compatibility": "adaptive",
+      "best_for": [
+        "童年",
+        "亲子",
+        "轻喜剧",
+        "启蒙"
+      ],
+      "aliases": [
+        "child-crayon",
+        "bad-crayon",
+        "儿童蜡笔"
+      ],
+      "summary": "歪比例、重复轮廓、漏白与轻微越界，保留真实儿童画的天真感。",
+      "planner_guidance": "Keep the subject recognizable even though proportions and mark-making are charmingly clumsy.",
+      "aesthetic": "Authentic young-child crayon drawing with wobbly repeated outlines, imperfect closure, uneven faces, simple bent limbs, random stroke direction, visible gaps, and occasional coloring outside the lines.",
+      "paper": "Bright white drawing sheet, evenly lit and isolated from any tabletop.",
+      "palette": "Basic red, yellow, blue, green, orange, and pink crayons with uneven pressure and large white gaps.",
+      "avoid": "polished children's-book art, commercial cuteness, symmetry, smooth fill, gradients, correct perspective",
+      "render": {
+        "block_fill_style": "crayon",
+        "color_fill_scope": "block",
+        "stroke_detail": "rich",
+        "line_thickness": 0,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 5,
+        "draw_blocks": 3,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "adapted from story-to-handdrawn-video and its MIT-attributed style library"
+    },
+    {
+      "schema_version": 1,
+      "order": 11,
+      "id": "raw-kid-crayon",
+      "name_zh": "潦草家庭蜡笔",
+      "name_en": "Raw family crayon card",
+      "family": "儿童涂画",
+      "compatibility": "adaptive",
+      "best_for": [
+        "家庭",
+        "温暖日常",
+        "投稿故事",
+        "亲子"
+      ],
+      "aliases": [
+        "rawkid",
+        "rawkid-crayon",
+        "family-crayon",
+        "潦草蜡笔"
+      ],
+      "summary": "成人歪线稿加孩子乱涂色，笔触更散、更乱、更露白。",
+      "planner_guidance": "Keep true age and height differences while allowing every figure a different imperfect shape.",
+      "aesthetic": "Ordinary hand-drawn black outline covered by discontinuous child crayon marks with sudden direction and pressure changes, crossings, gaps, stops, and rare spillover.",
+      "paper": "Bright untextured white page with only zero to two necessary background props.",
+      "palette": "Cheerful ordinary crayon colors, never fluorescent; highly uneven coverage with much exposed white.",
+      "avoid": "chibi templates, neat diagonal hatching, uniform coverage, photographed paper, complete room scenes, digital filter",
+      "render": {
+        "block_fill_style": "crayon",
+        "color_fill_scope": "block",
+        "stroke_detail": "rich",
+        "line_thickness": 0,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 5,
+        "draw_blocks": 3,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "adapted from story-to-handdrawn-video and its MIT-attributed style library"
+    },
+    {
+      "schema_version": 1,
+      "order": 12,
+      "id": "bean-doodle-infographic",
+      "name_zh": "小豆人涂鸦信息图",
+      "name_en": "Bean doodle infographic",
+      "family": "符号涂鸦",
+      "compatibility": "native",
+      "best_for": [
+        "步骤",
+        "清单",
+        "知识卡",
+        "轻剧情"
+      ],
+      "aliases": [
+        "bean",
+        "blob-doodle",
+        "豆人"
+      ],
+      "summary": "黑色豆形主角、白点眼与单一橙色重点，特别适合步骤与清单。",
+      "planner_guidance": "Let one recurring bean-shaped character demonstrate each beat through a clear action.",
+      "aesthetic": "Black marker doodle infographic starring one solid rounded bean character with two white dot eyes, a tiny curved mouth, thin limbs, and simple outlined props.",
+      "paper": "Pure white page with generous open space.",
+      "palette": "Black and white with exactly one orange focal object or accent.",
+      "avoid": "realistic people, multiple accent colors, gray shading, textures, detailed scenery, polished vector icons",
+      "render": {
+        "block_fill_style": "clean",
+        "color_fill_scope": "block",
+        "stroke_detail": "balanced",
+        "line_thickness": 1,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 5,
+        "draw_blocks": 3,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "adapted from story-to-handdrawn-video and its MIT-attributed style library"
+    },
+    {
+      "schema_version": 1,
+      "order": 13,
+      "id": "organic-contour-doodle",
+      "name_zh": "有机轮廓涂鸦",
+      "name_en": "Organic contour doodle",
+      "family": "品牌涂鸦",
+      "compatibility": "native",
+      "best_for": [
+        "品牌故事",
+        "生活方式",
+        "餐饮",
+        "轻科普"
+      ],
+      "aliases": [
+        "organic-doodle",
+        "contour-doodle",
+        "有机轮廓"
+      ],
+      "summary": "自由单线轮廓配一个大胆有机色块，成熟、轻盈且物体边界清楚。",
+      "planner_guidance": "Build a rhythmic composition from a few complete objects with strong negative space.",
+      "aesthetic": "Mature freehand contour illustration with flowing black lines that occasionally overlap, break, or wander beyond forms, paired with a few rounded organic color shapes.",
+      "paper": "Warm white paper with no decorative pattern.",
+      "palette": "Black line, one bold main color, and at most one quiet supporting color.",
+      "avoid": "childish crayon, corporate vector people, sticker packs, strict geometry, realistic shading, multicolor clutter",
+      "render": {
+        "block_fill_style": "clean",
+        "color_fill_scope": "block",
+        "stroke_detail": "rich",
+        "line_thickness": 1,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 6,
+        "draw_blocks": 4,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "adapted from story-to-handdrawn-video and its MIT-attributed style library"
+    },
+    {
+      "schema_version": 1,
+      "order": 14,
+      "id": "naive-marker-notes",
+      "name_zh": "稚拙马克笔笔记",
+      "name_en": "Naive marker notes",
+      "family": "手写笔记",
+      "compatibility": "native",
+      "best_for": [
+        "社媒观点",
+        "复盘",
+        "方法论",
+        "年轻内容"
+      ],
+      "aliases": [
+        "marker-notes",
+        "doodle-notes",
+        "马克笔笔记"
+      ],
+      "summary": "歪边框、粗符号、箭头与一两种荧光重点，像有想法的人随手记下。",
+      "planner_guidance": "Keep one dominant illustration and only a few nonverbal marks that clarify hierarchy.",
+      "aesthetic": "Controlled naive marker-note illustration with slightly crooked contours, symbolic faces, loose boxes, stars, arrows, underlines, and intentional scale jumps while remaining visually ordered.",
+      "paper": "Clean white notebook-like paper without ruled lines or binder details.",
+      "palette": "Heavy black marker with one or two fluorescent highlighter colors used sparingly.",
+      "avoid": "typeset words, pseudo-writing, strict grid, polished icons, stock characters, sticker overload, gradients",
+      "render": {
+        "block_fill_style": "clean",
+        "color_fill_scope": "block",
+        "stroke_detail": "rich",
+        "line_thickness": 2,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 7,
+        "draw_blocks": 5,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "adapted from story-to-handdrawn-video and its MIT-attributed style library"
+    },
+    {
+      "schema_version": 1,
+      "order": 15,
+      "id": "notebook-pencil-doodle",
+      "name_zh": "铅笔课堂随记",
+      "name_en": "Notebook pencil doodle",
+      "family": "手写笔记",
+      "compatibility": "native",
+      "best_for": [
+        "学习",
+        "课程",
+        "复习",
+        "知识点"
+      ],
+      "aliases": [
+        "pencil-notes",
+        "study-doodle",
+        "课堂随记"
+      ],
+      "summary": "轻石墨线、擦除痕与小型示意图，适合学习笔记和温和解释。",
+      "planner_guidance": "Arrange the concept as a central sketch with two or three small supporting visual cues.",
+      "aesthetic": "Loose classroom pencil doodle with soft graphite pressure variation, a few erased construction ghosts, simple diagram arrows, and clean complete object silhouettes.",
+      "paper": "Pale warm notebook paper without visible writing, ruling, holes, or page edges.",
+      "palette": "Graphite gray, pale blue pencil, and a tiny muted yellow highlight.",
+      "avoid": "dense graphite shading, realistic still life, typed notes, fake equations, dirty paper, full-page texture",
+      "render": {
+        "block_fill_style": "soft-wash",
+        "color_fill_scope": "block",
+        "stroke_detail": "max",
+        "line_thickness": 0,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 240,
+        "max_draw_blocks": 6,
+        "draw_blocks": 4,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "whiteboard-video-engine curated media recipe"
+    },
+    {
+      "schema_version": 1,
+      "order": 16,
+      "id": "ballpoint-scribble",
+      "name_zh": "圆珠笔缠绕线速写",
+      "name_en": "Ballpoint scribble sketch",
+      "family": "艺术速写",
+      "compatibility": "experimental",
+      "best_for": [
+        "肖像",
+        "动物",
+        "独白",
+        "情绪"
+      ],
+      "aliases": [
+        "scribble",
+        "ballpoint",
+        "圆珠笔速写"
+      ],
+      "summary": "自由缠绕与回笔形成体积，保留犹豫线和现场手稿呼吸感。",
+      "planner_guidance": "Use line density to clarify volume without losing the complete outer silhouette.",
+      "aesthetic": "Fast black ballpoint sketch made from freely looping, overlapping, revisiting lines with open contours, hesitation marks, and sparse line-density modeling.",
+      "paper": "Plain white sketchbook paper with almost no background cues.",
+      "palette": "Single black ballpoint ink; no flat color areas.",
+      "avoid": "closed vector contours, uniform crosshatching, comic inking, charcoal smudge, photoreal pencil, dense background",
+      "render": {
+        "block_fill_style": "clean",
+        "color_fill_scope": "block",
+        "stroke_detail": "max",
+        "line_thickness": 0,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 5,
+        "draw_blocks": 3,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "adapted from story-to-handdrawn-video and its MIT-attributed style library"
+    },
+    {
+      "schema_version": 1,
+      "order": 17,
+      "id": "inked-storybook",
+      "name_zh": "墨线淡彩绘本",
+      "name_en": "Inked light-color storybook",
+      "family": "绘本线稿",
+      "compatibility": "native",
+      "best_for": [
+        "角色故事",
+        "青春",
+        "对白",
+        "轻冒险"
+      ],
+      "aliases": [
+        "ink-storybook",
+        "light-color-ink",
+        "墨线绘本"
+      ],
+      "summary": "自信松散墨线覆盖透明淡彩，兼顾角色表演和可抽取线条。",
+      "planner_guidance": "Favor expressive acting and confident silhouettes with only sparse local hatching.",
+      "aesthetic": "Expressive storybook illustration with confident loose ink lines, slight line-weight variation, a few overlapping construction lines, and transparent local-color washes.",
+      "paper": "Flat warm-cream paper with one low-detail brush area and broad clean margins.",
+      "palette": "Two to four coordinated transparent colors; line color may shift darker within each local hue.",
+      "avoid": "full-block hatching, chaotic hair scribbles, thick oil paint, photorealism, full-bleed scenery, vector polish",
+      "render": {
+        "block_fill_style": "soft-wash",
+        "color_fill_scope": "block",
+        "stroke_detail": "max",
+        "line_thickness": 0,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 6,
+        "draw_blocks": 4,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "adapted from story-to-handdrawn-video and its MIT-attributed style library"
+    },
+    {
+      "schema_version": 1,
+      "order": 18,
+      "id": "emotional-watercolor-sketch",
+      "name_zh": "情绪淡彩速写",
+      "name_en": "Emotional watercolor sketch",
+      "family": "淡彩叙事",
+      "compatibility": "adaptive",
+      "best_for": [
+        "回忆",
+        "关系",
+        "纪实",
+        "情感"
+      ],
+      "aliases": [
+        "light-watercolor",
+        "emo-sketch",
+        "淡彩速写"
+      ],
+      "summary": "靛蓝松散速写线、大留白与一处暖橙焦点，克制而有情绪。",
+      "planner_guidance": "Frame the beat like a quiet memory fragment with one emotional focal object.",
+      "aesthetic": "Loose indigo pencil-and-ink sketch with overlapping construction lines, broken contours, transparent watercolor edges, and one gentle warm focal wash.",
+      "paper": "Bright lightly textured watercolor paper, mostly left untouched.",
+      "palette": "Indigo, gray-blue, pale skin tones, paper white, and exactly one soft warm-orange focus.",
+      "avoid": "full-page wash, saturated rainbow, hard cartoon outline, commercial cuteness, photoreal light, busy interiors",
+      "render": {
+        "block_fill_style": "soft-wash",
+        "color_fill_scope": "block",
+        "stroke_detail": "max",
+        "line_thickness": 0,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 6,
+        "draw_blocks": 3,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "adapted from story-to-handdrawn-video and its MIT-attributed style library"
+    },
+    {
+      "schema_version": 1,
+      "order": 19,
+      "id": "ink-wash-minimal",
+      "name_zh": "水墨留白",
+      "name_en": "Minimal ink wash",
+      "family": "传统手绘",
+      "compatibility": "adaptive",
+      "best_for": [
+        "寓言",
+        "传统文化",
+        "历史",
+        "感悟"
+      ],
+      "aliases": [
+        "ink-wash",
+        "shuimo",
+        "水墨"
+      ],
+      "summary": "枯湿浓淡墨线、大量宣纸留白与一处低饱和点色，适合寓言文化题材。",
+      "planner_guidance": "Use very few brush marks to capture gesture, identity, and cause-and-effect.",
+      "aesthetic": "Expressive Chinese ink drawing with dry-brush flying white, wet-to-dry variation, broken strokes, restrained diffusion, and a complete recognizable main silhouette.",
+      "paper": "Bright warm xuan-paper field with generous active emptiness and no decorative calligraphy.",
+      "palette": "Black ink in several concentrations, at most a little pale ochre or blue-green, and one tiny abstract vermilion accent without readable glyphs.",
+      "avoid": "uniform grayscale filter, rigid closed contour, even fill, glossy gradient, dense scenery, fake calligraphy, ornate seal text",
+      "render": {
+        "block_fill_style": "dry-brush",
+        "color_fill_scope": "block",
+        "stroke_detail": "max",
+        "line_thickness": 0,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 5,
+        "draw_blocks": 3,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "whiteboard-video-engine curated media recipe"
+    },
+    {
+      "schema_version": 1,
+      "order": 20,
+      "id": "retro-gouache-concept",
+      "name_zh": "中古动画水粉概念稿",
+      "name_en": "Mid-century gouache concept",
+      "family": "水粉绘本",
+      "compatibility": "adaptive",
+      "best_for": [
+        "怀旧",
+        "城市",
+        "温暖剧情",
+        "角色短片"
+      ],
+      "aliases": [
+        "retro-gouache",
+        "mid-century",
+        "中古水粉"
+      ],
+      "summary": "奶油纸、铅笔起稿线和哑光水粉大形，具有复古动画概念设计气质。",
+      "planner_guidance": "Use simplified stage-like scenery, one focal action, and expressive large shapes.",
+      "aesthetic": "Hand-painted mid-century animation concept sketch with loose pencil underdrawing, matte opaque gouache masses, dry-brush edges, and simplified theatrical depth.",
+      "paper": "Warm cream paper visible around the composition.",
+      "palette": "Controlled orange-blue complements with cream yellow, brick red, and dusty blue.",
+      "avoid": "modern anime faces, glossy digital paint, 3D, photorealism, neon, hyper-detail, smooth airbrush, vector geometry",
+      "render": {
+        "block_fill_style": "dry-brush",
+        "color_fill_scope": "block",
+        "stroke_detail": "rich",
+        "line_thickness": 0,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 6,
+        "draw_blocks": 3,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "adapted from story-to-handdrawn-video and its MIT-attributed style library"
+    },
+    {
+      "schema_version": 1,
+      "order": 21,
+      "id": "nordic-gouache-storybook",
+      "name_zh": "北欧低饱和水粉绘本",
+      "name_en": "Nordic gouache storybook",
+      "family": "水粉绘本",
+      "compatibility": "adaptive",
+      "best_for": [
+        "睡前故事",
+        "自然",
+        "安静日常",
+        "生活方式"
+      ],
+      "aliases": [
+        "nordic-storybook",
+        "scandi-gouache",
+        "北欧绘本"
+      ],
+      "summary": "圆钝人物、低饱和限定色和干刷水粉边缘，安静且留白充足。",
+      "planner_guidance": "Keep scenes calm, planar, and sparse, with natural poses and only essential furniture or plants.",
+      "aesthetic": "Nordic children's gouache with simplified rounded figures, tiny dot eyes, matte dry-brush color edges, and restrained planar props.",
+      "paper": "Warm white fine-tooth paper with broad quiet negative space.",
+      "palette": "Denim blue, mustard yellow, brick orange, sage green, and warm gray.",
+      "avoid": "saturated palette, glossy gradients, complex perspective, anime eyes, thick black outlines, 3D, corporate vector art",
+      "render": {
+        "block_fill_style": "dry-brush",
+        "color_fill_scope": "block",
+        "stroke_detail": "rich",
+        "line_thickness": 0,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 6,
+        "draw_blocks": 3,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "adapted from story-to-handdrawn-video and its MIT-attributed style library"
+    },
+    {
+      "schema_version": 1,
+      "order": 22,
+      "id": "sunlit-storybook",
+      "name_zh": "暖光童画绘本",
+      "name_en": "Sunlit storybook vis-dev",
+      "family": "水粉绘本",
+      "compatibility": "adaptive",
+      "best_for": [
+        "童话",
+        "治愈",
+        "亲情",
+        "冒险"
+      ],
+      "aliases": [
+        "sunlit",
+        "warm-storybook",
+        "暖光童画"
+      ],
+      "summary": "柔软水粉形、暖边光与未完成概念稿留白，适合治愈和童话。",
+      "planner_guidance": "Build characters from soft large shapes and keep the background as only a few loose color cues.",
+      "aesthetic": "Warm visual-development storybook painting with soft matte gouache, dry scumbles, fluffy shape language, clear expressions, and a deliberately unfinished paper-edge quality.",
+      "paper": "Light warm paper remaining visibly open around the scene.",
+      "palette": "Powder blue, cream yellow, soft orange, and a little blue-green with restrained warm rim light.",
+      "avoid": "sharp anime hair, plastic highlights, 3D, realistic faces, full-bleed scenery, vector edges, excessive polish",
+      "render": {
+        "block_fill_style": "soft-wash",
+        "color_fill_scope": "block",
+        "stroke_detail": "rich",
+        "line_thickness": 0,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 6,
+        "draw_blocks": 3,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "adapted from story-to-handdrawn-video and its MIT-attributed style library"
+    },
+    {
+      "schema_version": 1,
+      "order": 23,
+      "id": "warm-flat-storybook",
+      "name_zh": "暖色几何扁平绘本",
+      "name_en": "Warm flat storybook",
+      "family": "扁平绘本",
+      "compatibility": "experimental",
+      "best_for": [
+        "品牌",
+        "关系",
+        "轻科普",
+        "现代寓言"
+      ],
+      "aliases": [
+        "flat-storybook",
+        "warm-flat",
+        "扁平绘本"
+      ],
+      "summary": "圆润几何色形、极细局部线和严格限定色板，适合品牌与轻科普。",
+      "planner_guidance": "Use a few large rounded shapes and keep roughly two thirds of the canvas open.",
+      "aesthetic": "Contemporary flat storybook made from large rounded geometric color shapes, near-invisible outer contour, and only tiny navy detail lines for faces and fingers.",
+      "paper": "Warm white paper field with no gradients or scene frame.",
+      "palette": "Strict navy, mist blue, coral orange, golden orange, warm peach, and warm white; one hard same-hue shadow shape at most.",
+      "avoid": "corporate vector people, chibi faces, thick outlines, 3D, glossy gradients, complex scenery, painterly texture, extra hues",
+      "render": {
+        "block_fill_style": "clean",
+        "color_fill_scope": "block",
+        "stroke_detail": "balanced",
+        "line_thickness": 0,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 242,
+        "max_draw_blocks": 6,
+        "draw_blocks": 3,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "adapted from story-to-handdrawn-video and its MIT-attributed style library"
+    },
+    {
+      "schema_version": 1,
+      "order": 24,
+      "id": "zine-riso-collage",
+      "name_zh": "Zine 孔版拼贴",
+      "name_en": "Zine riso collage",
+      "family": "版画拼贴",
+      "compatibility": "experimental",
+      "best_for": [
+        "旅行",
+        "音乐",
+        "青年文化",
+        "成长"
+      ],
+      "aliases": [
+        "zine",
+        "riso",
+        "孔版拼贴"
+      ],
+      "summary": "手撕边、复印颗粒与双色套印偏移形成 DIY 小志质感。",
+      "planner_guidance": "Use only a few torn or cut elements that directly serve the current beat.",
+      "aesthetic": "DIY zine collage combining simplified cut-paper subjects, sparse hand-ink contours, a little tape, photocopy grain, halftone, and visibly imperfect two-color registration.",
+      "paper": "Warm white paper with clean outer margins and no photographed desk.",
+      "palette": "Black copy ink plus two riso-like spot colors chosen for strong separation.",
+      "avoid": "polished scrapbook, real logos, readable newspaper text, sticker overload, gradients, 3D shadows, photoreal environments",
+      "render": {
+        "block_fill_style": "clean",
+        "color_fill_scope": "block",
+        "stroke_detail": "rich",
+        "line_thickness": 1,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 7,
+        "draw_blocks": 5,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "adapted from story-to-handdrawn-video and its MIT-attributed style library"
+    },
+    {
+      "schema_version": 1,
+      "order": 25,
+      "id": "manga-screentone",
+      "name_zh": "黑白漫画网点",
+      "name_en": "Manga screentone",
+      "family": "漫画线稿",
+      "compatibility": "experimental",
+      "best_for": [
+        "反转",
+        "冲突",
+        "动作",
+        "悬念"
+      ],
+      "aliases": [
+        "manga",
+        "screentone",
+        "漫画网点"
+      ],
+      "summary": "清晰动作墨线、有限灰阶网点和高反差节奏，适合冲突与反转。",
+      "planner_guidance": "Prioritize pose, expression, and one strong focal action; keep tones large and sparse.",
+      "aesthetic": "Original black-and-white comic drawing with crisp hand-ink contours, selective speed lines, and only two coarse program-like screentone densities that remain visually separable.",
+      "paper": "Pure white page without panels, gutters, speech bubbles, or trim marks.",
+      "palette": "One-bit black and white plus two stable gray tone values; no colored fill.",
+      "avoid": "copied comic imagery, recognizable franchise design, dense moire patterns, speech balloons, tiny halftone, full-page black",
+      "render": {
+        "block_fill_style": "clean",
+        "color_fill_scope": "block",
+        "stroke_detail": "max",
+        "line_thickness": 1,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 228,
+        "max_draw_blocks": 6,
+        "draw_blocks": 3,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "whiteboard-video-engine curated media recipe"
+    },
+    {
+      "schema_version": 1,
+      "order": 26,
+      "id": "linocut-editorial",
+      "name_zh": "粗粝木刻社论",
+      "name_en": "Rough linocut editorial",
+      "family": "版画线稿",
+      "compatibility": "experimental",
+      "best_for": [
+        "历史",
+        "社会议题",
+        "寓言",
+        "社论"
+      ],
+      "aliases": [
+        "linocut",
+        "woodcut",
+        "木刻"
+      ],
+      "summary": "粗黑形块、刀刻留白和一块暗红或深蓝套色，视觉力量最强。",
+      "planner_guidance": "Reduce the beat to one bold symbol and retain enough open white cuts to expose structure.",
+      "aesthetic": "Hand-cut linocut editorial illustration with irregular heavy black masses, carved white channels, rough chipped contours, directional but nonmechanical cuts, and slight registration imperfection.",
+      "paper": "Warm white fibrous paper kept light enough for line extraction.",
+      "palette": "Black ink plus one dark brick-red or deep-blue spot color.",
+      "avoid": "photorealism, delicate pencil, smooth vector edges, uniform noise, rainbow colors, gradients, ornate lettering, excessively fine hatching",
+      "render": {
+        "block_fill_style": "dry-brush",
+        "color_fill_scope": "block",
+        "stroke_detail": "rich",
+        "line_thickness": 1,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 215,
+        "max_draw_blocks": 5,
+        "draw_blocks": 3,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "adapted from story-to-handdrawn-video and its MIT-attributed style library"
+    },
+    {
+      "schema_version": 1,
+      "order": 27,
+      "id": "blueprint-pencil",
+      "name_zh": "浅底蓝图铅笔",
+      "name_en": "Light-paper blueprint pencil",
+      "family": "工程草图",
+      "compatibility": "native",
+      "best_for": [
+        "建筑",
+        "机械",
+        "产品",
+        "空间关系"
+      ],
+      "aliases": [
+        "blueprint",
+        "engineering-sketch",
+        "工程蓝图"
+      ],
+      "summary": "藏蓝结构线、浅辅助线与橙色重点，在浅底上保留蓝图秩序又适合抽线。",
+      "planner_guidance": "Use precise large geometry, a few construction guides, and clear part-to-part relationships without generated labels.",
+      "aesthetic": "Hand-drafted engineering sketch on light paper with confident navy contours, pale blue construction lines, occasional dashed hidden edges, and clean simplified people for scale.",
+      "paper": "Very pale blue-white engineering paper without grid numbers, title block, frame, or dimensions.",
+      "palette": "Navy and pale cyan linework with exactly one orange functional emphasis.",
+      "avoid": "dark blueprint background, machine-generated text, dimensions, perfect CAD output, photoreal product rendering, dense crosshatching",
+      "render": {
+        "block_fill_style": "clean",
+        "color_fill_scope": "block",
+        "stroke_detail": "max",
+        "line_thickness": 0,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 7,
+        "draw_blocks": 5,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "whiteboard-video-engine curated media recipe"
+    },
+    {
+      "schema_version": 1,
+      "order": 28,
+      "id": "editorial-portrait",
+      "name_zh": "编辑肖像线描",
+      "name_en": "Editorial portrait linework",
+      "family": "人物线描",
+      "compatibility": "adaptive",
+      "best_for": [
+        "人物传记",
+        "访谈",
+        "名人故事",
+        "观点"
+      ],
+      "aliases": [
+        "portrait-line",
+        "editorial-line",
+        "编辑肖像"
+      ],
+      "summary": "五官重点精细、衣发概括、背景淡化，适合人物传记和访谈故事。",
+      "planner_guidance": "Protect facial identity and expression while simplifying clothing and all background information.",
+      "aesthetic": "Editorial portrait drawing with accurate expressive face, varied charcoal-ink contour, selectively modeled eyes and mouth, simplified hair and clothing, and a few loose gestural background marks.",
+      "paper": "Warm gray-white paper with generous portrait breathing room.",
+      "palette": "Black and warm gray with one restrained skin, rust, or brand-color accent.",
+      "avoid": "photo-edge tracing, uncanny realism, beauty retouching, dense room, glossy painting, tiny decorative texture",
+      "render": {
+        "block_fill_style": "soft-wash",
+        "color_fill_scope": "block",
+        "stroke_detail": "max",
+        "line_thickness": 0,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 4,
+        "draw_blocks": 2,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "whiteboard-video-engine curated media recipe"
+    },
+    {
+      "schema_version": 1,
+      "order": 29,
+      "id": "ms-paint-doodle",
+      "name_zh": "鼠标锯齿涂鸦",
+      "name_en": "Mouse-drawn pixel doodle",
+      "family": "故意画烂",
+      "compatibility": "experimental",
+      "best_for": [
+        "吐槽",
+        "荒诞",
+        "反转",
+        "轻喜剧"
+      ],
+      "aliases": [
+        "ms-paint",
+        "ms-paint-bad-doodle",
+        "bad-doodle",
+        "鼠标涂鸦"
+      ],
+      "summary": "硬锯齿歪线、荒谬比例和少量纯色色块，适合吐槽与病毒感反转。",
+      "planner_guidance": "Make the action instantly understandable despite intentionally awkward anatomy and geometry.",
+      "aesthetic": "Crude mouse-drawn doodle with jagged pixel stair-steps, shaky discontinuous lines, absurd proportions, hard-edged flat fills, and obvious amateur mistakes.",
+      "paper": "Featureless bright white digital canvas.",
+      "palette": "A few recognizable high-contrast solid colors with gaps and spillover.",
+      "avoid": "antialiasing, polished illustration, smooth curves, correct anatomy, gradients, realistic light, texture, professional composition",
+      "render": {
+        "block_fill_style": "clean",
+        "color_fill_scope": "block",
+        "stroke_detail": "balanced",
+        "line_thickness": 1,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 5,
+        "draw_blocks": 3,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "adapted from story-to-handdrawn-video and its MIT-attributed style library"
+    },
+    {
+      "schema_version": 1,
+      "order": 30,
+      "id": "real-crayon-paper",
+      "name_zh": "真实蜡笔纸感",
+      "name_en": "Real crayon on paper",
+      "family": "儿童涂画",
+      "compatibility": "adaptive",
+      "best_for": [
+        "成长记录",
+        "儿童视角",
+        "亲子",
+        "童年"
+      ],
+      "aliases": [
+        "paper-crayon",
+        "physical-crayon",
+        "真实蜡笔"
+      ],
+      "summary": "能看到纸齿、蜡质结块、压力变化和大量漏白，但保持浅底与稳定构图。",
+      "planner_guidance": "Preserve the full sheet-like composition while keeping every story subject large and recognizable.",
+      "aesthetic": "Authentic physical crayon drawing with wobbly contours, visible paper-tooth skips, wax buildup under heavy pressure, broken light strokes, uneven direction, and several honest spillovers.",
+      "paper": "Bright white paper fills the canvas under flat soft daylight; no desk, fold, mockup, shadow, or page frame.",
+      "palette": "Bright basic crayons with highly uneven pressure and roughly half the color regions showing white gaps.",
+      "avoid": "digital illustration, uniform crayon texture, smooth fill, polished anatomy, dark tabletop, moody shadow, commercial cuteness",
+      "render": {
+        "block_fill_style": "crayon",
+        "color_fill_scope": "block",
+        "stroke_detail": "rich",
+        "line_thickness": 0,
+        "line_art_snap": true,
+        "line_art_snap_threshold": 235,
+        "max_draw_blocks": 5,
+        "draw_blocks": 3,
+        "block_overlap": 0.16,
+        "block_order": "reading"
+      },
+      "provenance": "adapted from story-to-handdrawn-video and its MIT-attributed style library"
+    }
+  ],
+  "hands": [
+    "procedural",
+    "none",
+    "asian",
+    "black",
+    "children",
+    "white"
+  ]
+}

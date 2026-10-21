@@ -205,6 +205,44 @@ async fn install_model_python(exe:String)->Result<String,String>{
  }).await.map_err(|e|e.to_string())?
 }
 #[tauri::command]
+async fn prepare_model(exe:String,name:String)->Result<String,String>{
+ tauri::async_runtime::spawn_blocking(move || {
+  let root=runtime_root(&exe)?;
+  let (url,dir,marker)=match name.as_str(){
+   "informative"=>("https://github.com/carolineec/informative-drawings.git","informative-drawings","model.py"),
+   "anime2sketch"=>("https://github.com/Mukosame/Anime2Sketch.git","Anime2Sketch","model.py"),
+   _=>return Err("Unknown model selected".to_string())
+  };
+  let target=root.join("tools").join(dir);
+  if !target.join(marker).is_file(){
+   if target.exists(){return Err("Existing model directory is incomplete. Repair manually; no files were overwritten.".into())}
+   let output=Command::new("git").args(["clone","--depth","1",url]).arg(&target).output().map_err(|e|format!("Git is unavailable: {e}"))?;
+   if !output.status.success(){return Err(format!("Git clone failed: {}",String::from_utf8_lossy(&output.stderr)))}
+  }
+  let base=root.join(".venv/Scripts/python.exe");
+  if !base.is_file(){return Err("Engine Python missing. Configure Engine first.".into())}
+  let env=root.join(".venv-lineart");
+  if !env.join("Scripts/python.exe").exists(){
+   let result=Command::new(&base).args(["-m","venv"]).arg(&env).output().map_err(|e|e.to_string())?;
+   if !result.status.success(){return Err(format!("Unable to create Python environment: {}",String::from_utf8_lossy(&result.stderr)))}
+  }
+  let py=env.join("Scripts/python.exe");
+  let ready=Command::new(&py).args(["-c","import torch, torchvision, PIL, numpy"]).output().map(|o|o.status.success()).unwrap_or(false);
+  if !ready{
+   let result=Command::new(&py).args(["-m","pip","install","torch","torchvision","Pillow","numpy","tqdm"]).output().map_err(|e|e.to_string())?;
+   if !result.status.success(){return Err(format!("Dependencies failed: {}",String::from_utf8_lossy(&result.stderr)))}
+  }
+  let check=Command::new(&py).args(["-c","import torch, torchvision, PIL, numpy"]).output().map_err(|e|e.to_string())?;
+  if !check.status.success(){return Err(format!("Import check failed: {}",String::from_utf8_lossy(&check.stderr)))}
+  let weight=model_desc(&root,&name,true).weights;
+  if weight {
+   Ok(format!("Dependencies installed for {name}. Weight file found; run a rendering test to verify compatibility."))
+  }else{
+   Ok(format!("Prepared {name}: source and PyTorch available. Model weights are still missing. Open the official weights page, download and import the file."))
+  }
+ }).await.map_err(|e|e.to_string())?
+}
+#[tauri::command]
 fn import_model_weight(exe:String,name:String,source:String)->Result<String,String>{
  let root=runtime_root(&exe)?;
  let target=match name.as_str(){
@@ -226,6 +264,6 @@ fn import_model_weight(exe:String,name:String,source:String)->Result<String,Stri
 pub fn run() {
  tauri::Builder::default().plugin(tauri_plugin_dialog::init()).manage(Renderer(Mutex::new(None)))
   .setup(|app| {if cfg!(debug_assertions) {app.handle().plugin(tauri_plugin_log::Builder::default().level(log::LevelFilter::Info).build())?;}Ok(())})
-  .invoke_handler(tauri::generate_handler![save_input,output_dir,cancel_render,run_engine,reveal_output,read_preview,doctor_engine,model_status,install_model_code,import_model_weight,install_model_python,inspect_installation])
+  .invoke_handler(tauri::generate_handler![save_input,output_dir,cancel_render,run_engine,reveal_output,read_preview,doctor_engine,model_status,install_model_code,import_model_weight,install_model_python,inspect_installation,prepare_model])
   .run(tauri::generate_context!()).expect("error while building tauri application");
 }

@@ -242,6 +242,70 @@ async fn prepare_model(exe:String,name:String)->Result<String,String>{
   }
  }).await.map_err(|e|e.to_string())?
 }
+
+#[tauri::command]
+async fn install_model_complete(exe:String,name:String)->Result<String,String>{
+ let model=name.clone();
+ prepare_model(exe.clone(),name).await?;
+ tauri::async_runtime::spawn_blocking(move || {
+  let root=runtime_root(&exe)?;
+  let env=root.join(".venv-lineart/Scripts/python.exe");
+  if !env.is_file(){return Err("Model Python environment missing".into())}
+  let target=match model.as_str(){
+   "informative"=>root.join("tools/informative-drawings/checkpoints/model/anime_style/netG_A_latest.pth"),
+   "anime2sketch"=>root.join("tools/Anime2Sketch/weights/netG.pth"),
+   _=>return Err("Unknown model".into())
+  };
+  if target.is_file() && std::fs::metadata(&target).map_err(|e|e.to_string())?.len()>1_000_000{
+   return Ok(format!("Weight exists at {}. Run an inference test before use.",target.display()))
+  }
+  let tmp=root.join(".model-downloads").join(&model);
+  std::fs::create_dir_all(&tmp).map_err(|e|e.to_string())?;
+  let install=Command::new(&env).args(["-m","pip","install","gdown"]).output().map_err(|e|e.to_string())?;
+  if !install.status.success(){return Err(format!("Installing model downloader failed: {}",String::from_utf8_lossy(&install.stderr)))}
+  let output=if model=="informative"{
+   Command::new(&env).args(["-m","gdown","--id","1MIdHzecxz-z0uY3ARL_R40DlKcuQxiDk","-O"]).arg(tmp.join("netG_A_latest.pth")).output()
+  }else{
+   Command::new(&env).args(["-m","gdown","--folder","--remaining-ok","https://drive.google.com/drive/folders/1Srf-WYUixK0wiUddc9y3pNKHHno5PN6R","-O"]).arg(&tmp).output()
+  }.map_err(|e|e.to_string())?;
+  if !output.status.success(){return Err(format!("Google Drive download failed: {}. Try again later or use Import weights.",String::from_utf8_lossy(&output.stderr)))}
+  let src=if model=="informative"{tmp.join("netG_A_latest.pth")}else{
+   fn find_model(dir:&std::path::Path,depth:u8)->Option<PathBuf>{
+    if depth>5{return None}
+    for e in std::fs::read_dir(dir).ok()?.flatten(){
+     let p=e.path();
+     if p.is_file() && p.file_name().and_then(|x|x.to_str()).map(|x|x.eq_ignore_ascii_case("netG.pth")).unwrap_or(false){return Some(p)}
+     if p.is_dir(){if let Some(v)=find_model(&p,depth+1){return Some(v)}}
+    }
+    None
+   }
+   find_model(&tmp,0).ok_or("Google Drive folder did not contain netG.pth; no files installed.")?
+  };
+  let src=if model=="informative"{
+   let zipcheck=Command::new(&env).args(["-c","import zipfile,sys;sys.exit(0 if zipfile.is_zipfile(sys.argv[1]) else 1)"]).arg(&src).status().map_err(|e|e.to_string())?;
+   if zipcheck.success(){
+    let extracted=tmp.join("extracted-netG_A_latest.pth");
+    let script="import zipfile,sys,shutil\nz=zipfile.ZipFile(sys.argv[1]); matches=[n for n in z.namelist() if n.replace('\\\\','/').endswith('/anime_style/netG_A_latest.pth') or n=='netG_A_latest.pth']; assert matches, 'No anime_style weight in zip';\nwith z.open(matches[0]) as inp,open(sys.argv[2],'wb') as out: shutil.copyfileobj(inp,out)";
+    let output=Command::new(&env).args(["-c",script]).arg(&src).arg(&extracted).output().map_err(|e|e.to_string())?;
+    if !output.status.success(){return Err(format!("Model archive extraction failed: {}",String::from_utf8_lossy(&output.stderr)))}
+    extracted
+   }else{src}
+  }else{src};
+  let data=std::fs::metadata(&src).map_err(|e|e.to_string())?;
+  if data.len()<1_000_000{return Err(format!("Downloaded file is too small ({} bytes). Refusing to install.",data.len()))}
+  let mut f=std::fs::File::open(&src).map_err(|e|e.to_string())?;
+  use std::io::Read;
+  let mut header=[0_u8;16];
+  f.read_exact(&mut header).map_err(|e|e.to_string())?;
+  if header.starts_with(b"<!") || header.starts_with(b"<html") || header.starts_with(b"{"){
+   return Err("Download is not a model file (web page or JSON), refusing to install.".into())
+  }
+  if target.exists(){return Err("Target weight already exists. No overwrite performed.".into())}
+  std::fs::create_dir_all(target.parent().ok_or("Invalid model path")?).map_err(|e|e.to_string())?;
+  std::fs::rename(&src,&target).or_else(|_|std::fs::copy(&src,&target).map(|_|())).map_err(|e|e.to_string())?;
+  Ok(format!("Downloaded {} MB to {}. Installation requires a final inference test.",data.len()/1_000_000,target.display()))
+ }).await.map_err(|e|e.to_string())?
+}
 #[tauri::command]
 fn import_model_weight(exe:String,name:String,source:String)->Result<String,String>{
  let root=runtime_root(&exe)?;
@@ -264,6 +328,6 @@ fn import_model_weight(exe:String,name:String,source:String)->Result<String,Stri
 pub fn run() {
  tauri::Builder::default().plugin(tauri_plugin_dialog::init()).manage(Renderer(Mutex::new(None)))
   .setup(|app| {if cfg!(debug_assertions) {app.handle().plugin(tauri_plugin_log::Builder::default().level(log::LevelFilter::Info).build())?;}Ok(())})
-  .invoke_handler(tauri::generate_handler![save_input,output_dir,cancel_render,run_engine,reveal_output,read_preview,doctor_engine,model_status,install_model_code,import_model_weight,install_model_python,inspect_installation,prepare_model])
+  .invoke_handler(tauri::generate_handler![save_input,output_dir,cancel_render,run_engine,reveal_output,read_preview,doctor_engine,model_status,install_model_code,import_model_weight,install_model_python,inspect_installation,prepare_model,install_model_complete])
   .run(tauri::generate_context!()).expect("error while building tauri application");
 }
